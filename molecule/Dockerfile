@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:16.10
 
 RUN apt-get update \
  && apt-get install -y gcc python-pip python-vagrant libssl-dev libffi-dev \
