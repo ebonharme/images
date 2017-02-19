@@ -14,4 +14,5 @@ RUN wget https://github.com/gboudreau/nest-api/archive/${NEST_API_VERSION}.tar.g
  && docker-php-ext-install mysqli \
  && docker-php-source delete \
  && echo '*/5 * * * *     /bin/rm -f /tmp/nest_php_* ; /usr/local/bin/php /var/www/html/insert.php > /dev/null' > cron.conf \
- && crontab cron.conf
+ && crontab cron.conf 
+ADD config.php inc/config.php
