@@ -9,7 +9,10 @@ $config = array(
 	    'nest_pass' => getenv('NEST_PASSWORD'),
         'local_tz' => getenv('TZ'),
         'local_woeid' => getenv('WOEID'), //19344 = Edinburgh, Scotland
-        'temperature_units' => getenv('TEMPERATURE_UNITS')
+        'temperature_units' => getenv('TEMPERATURE_UNITS'),
+        'yh_consumerKey' => getenv('YH_CONSUMER_KEY'),
+        'yh_consumerKeySecret' => getenv('YH_CONSUMER_SECRET'),
+        'yh_applicationId' => getenv('YH_APPLICATION_ID')
     );
 
 ?>
