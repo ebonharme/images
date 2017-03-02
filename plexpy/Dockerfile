@@ -15,7 +15,7 @@ RUN apk add --no-cache \
     py-openssl  
 
 # Get the source
-ENV PLEXPY_VERSION v1.4.16
+ENV PLEXPY_VERSION v2
 RUN git clone https://github.com/JonnyWong16/plexpy.git /opt/plexpy \
 	&& ( \
 		cd /opt/plexpy \
