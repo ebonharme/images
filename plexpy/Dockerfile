@@ -1,10 +1,8 @@
-# A Python based monitoring and tracking tool for Plex Media Server.
-#
 # docker run  -d \
 #  --name=PlexPy \
 #  -v <path to local plexpy data>:/data \
 #  -p 8181:8181 \
-#  r.j3ss.co/plexpy
+#  ebonharme/images:plexpy
 FROM alpine:latest
 
 ENV PLEXPY_VERSION v1.4.16
