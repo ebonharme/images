@@ -7,20 +7,27 @@
 #  r.j3ss.co/plexpy
 FROM alpine:latest
 
+ENV PLEXPY_VERSION v1.4.16
+
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.vcs-url="https://github.com/ebonharme/images.git" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.schema-version="1.0.0-rc1"
+      
 # Install required packages.
 RUN apk add --no-cache \
 	ca-certificates \
 	git \
 	python \
-    py-openssl  
-
-# Get the source
-ENV PLEXPY_VERSION v1.4.16
-RUN git clone https://github.com/JonnyWong16/plexpy.git /opt/plexpy \
-	&& ( \
-		cd /opt/plexpy \
-		&& git checkout "${PLEXPY_VERSION}" \
-	)
+	py-openssl \
+ && git clone https://github.com/JonnyWong16/plexpy.git /opt/plexpy \
+ && ( \
+    cd /opt/plexpy \
+    && git checkout "${PLEXPY_VERSION}" \
+)
 
 # Volume for Plexpy data.
 VOLUME /data
