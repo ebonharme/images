@@ -9,7 +9,7 @@ RUN git clone https://github.com/mycon/nestgraph.git /var/www/html
 WORKDIR /var/www/html
 RUN git submodule init \
  && git submodule update \
- && wget https://d3js.org/d3.v3.min.js \
+ && wget -O d3.min.js https://d3js.org/d3.v3.min.js \
  && docker-php-ext-install mysqli xml curl \
  && docker-php-source delete \
  && crontab /cron.conf
