@@ -1,3 +1,5 @@
+[![](https://images.microbadger.com/badges/image/ebonharme/images:sabnzbd.svg)](https://microbadger.com/images/ebonharme/images:sabnzbd "Get your own image badge on microbadger.com")
+
 ## About
 
 This is a Docker image for [SABnzbd](http://sabnzbd.org/) - the Open Source Binary Newsreader written in Python.

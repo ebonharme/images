@@ -1,0 +1,7 @@
+#image: ebonharme/manualimages:sabnzbd
+script:
+  - ./.drone/build.sh
+notify:
+  email:
+    recipients:
+      eric.bonharme@gmail.com
