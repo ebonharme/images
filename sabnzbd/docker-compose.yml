@@ -1,0 +1,16 @@
+---
+sabnzbd:
+    build: .
+    container_name: 'sabnzbd'
+    volumes:
+        - './mnt/Downloads:/mnt/Downloads'
+        - './config:/config'
+    environment:
+        - TZ="Europe/London"
+        - SABNZBD_UID=816
+        - SABNZBD_GID=816
+        - CONFIG=/config/sabnzbd.ini
+        - CMD_PARAMS=--logging 2
+    ports:
+        - '8080:8080'
+    restart: 'always'
