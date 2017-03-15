@@ -19,7 +19,7 @@ The Docker image currently supports:
 To run the SABnzbd container you can execute:
 
 ```bash
-docker run --name sabnzbd -v <datadir path>:/datadir -v <media path>:/media -p 8080:8080 sabnzbd/sabnzbd
+docker run --name sabnzbd -v <datadir path>:/mnt/Downloads -v <config path>:/config -p 8080:8080 ebonharme/images:sabnzbd
 ```
 
 Open a browser and point it to [http://my-docker-host:8080](http://my-docker-host:8080)
@@ -28,7 +28,7 @@ Open a browser and point it to [http://my-docker-host:8080](http://my-docker-hos
 
 You can also run the SABnzbd container by using [Docker Compose](https://www.docker.com/docker-compose).
 
-If you've cloned the [git repository](https://github.com/domibarton/docker-sabnzbd) you can build and run the Docker container locally (without the Docker Hub):
+If you've cloned the [git repository](https://github.com/ebonharme/images) and cd'ed to sabnzbd you can build and run the Docker container locally (without the Docker Hub):
 
 ```bash
 docker-compose up -d
@@ -38,11 +38,11 @@ If you want to use the Docker Hub image within your existing Docker Compose file
 
 ```yaml
 sabnzbd:
-    image: "sabnzbd/sabnzbd"
+    image: "ebonharme/images:sabnzbd"
     container_name: "sabnzbd"
     volumes:
-        - "<datadir path>:/datadir"
-        - "<media path>:/media"
+        - "<datadir path>:/mnt/Downloads"
+        - "<config path>:/config"
     ports:
         - "8080:8080"
     restart: always
@@ -54,16 +54,16 @@ sabnzbd:
 
 Please mount the following volumes inside your SABnzbd container:
 
-* `/datadir`: Holds all the SABnzbd data files (e.g. config, postProcessing)
-* `/media`: Directory for media (downloaded files)
+* `/mnt/Downloads`: Holds all the SABnzbd data files (e.g. downloads, postProcessing)
+* `/config`: Directory for configuration files
 
 ### Configuration file
 
-By default the SABnzbd configuration is located on `/datadir/config.ini`.
+By default the SABnzbd configuration is located on `/config/sabnzbd.ini`.
 If you want to change this you've to set the `CONFIG` environment variable, for example:
 
 ```
-CONFIG=/datadir/sabnzbd.ini
+CONFIG=/otherdir/conf.ini
 ```
 
 ### UID and GID

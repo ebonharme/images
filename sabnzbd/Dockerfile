@@ -1,5 +1,13 @@
 FROM debian:jessie-backports
 
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.vcs-url="https://github.com/ebonharme/images.git" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.schema-version="1.0.0-rc1"
+
 RUN groupadd -r -g 666 sabnzbd \
     && useradd -l -r -u 666 -g 666 -d /sabnzbd sabnzbd
 
@@ -51,10 +59,6 @@ RUN export SABNZBD_VERSION=1.2.2 PAR2CMDLINE_VERSION=v0.6.14 \
 VOLUME ["/mnt/Downloads", "/config"]
 
 EXPOSE 8080
-
-#
-# Start SABnzbd.
-#
 
 WORKDIR /sabnzbd
 
