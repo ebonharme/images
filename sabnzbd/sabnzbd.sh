@@ -36,7 +36,10 @@ chown -R ${USER}: /sabnzbd
 function check_dir {
   [ "$(stat -c '%u %g' $1)" == "${SABNZBD_UID} ${SABNZBD_GID}" ] || chown ${USER}: $1
 }
-check_dir /mnt/Downloads
+
+mount ${NFS_HOST}:${NFS_PATH} ${DATA_DIR}
+
+#check_dir ${DATA_DIR}
 #check_dir /media
 check_dir $(dirname ${CONFIG})
 echo "[DONE]"
