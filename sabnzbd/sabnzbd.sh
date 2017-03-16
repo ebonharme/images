@@ -33,7 +33,7 @@ echo "[DONE]"
 
 printf "Mounting ${NFS_HOST}:${NFS_PATH} on ${DATA_DIR}"
 mount -o nfsvers=4 ${NFS_HOST}:${NFS_PATH} ${DATA_DIR}
-print "[DONE]"
+printf "[DONE]"
 
 #
 # Set directory permissions.
