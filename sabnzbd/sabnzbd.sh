@@ -26,12 +26,23 @@ printf "Updating UID / GID... "
 [[ $(id -g ${USER}) == ${SABNZBD_GID} ]] || groupmod -o -g ${SABNZBD_GID} ${USER}
 echo "[DONE]"
 
+
+#
+# Mount
+#
+
+printf "Mounting ${NFS_HOST}:${NFS_PATH} on ${DATA_DIR}"
+mount -o nfsvers=4 ${NFS_HOST}:${NFS_PATH} ${DATA_DIR}
+print "[DONE]"
+
 #
 # Set directory permissions.
 #
 
-printf "Set permissions... "
+printf "Set permissions..."
+printf "touching ${CONFIG}"
 touch ${CONFIG}
+printf "chown -R ${USER}: /sabnzbd"
 chown -R ${USER}: /sabnzbd
 function check_dir {
   [ "$(stat -c '%u %g' $1)" == "${SABNZBD_UID} ${SABNZBD_GID}" ] || chown ${USER}: $1
