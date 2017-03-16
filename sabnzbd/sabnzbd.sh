@@ -64,6 +64,11 @@ PORT=$(sed -n '/^port *=/{s/port *= *//p;q}' ${CONFIG})
 LISTENER="-s 0.0.0.0:${PORT:=8080}"
 echo "[${PORT}]"
 
+printf "Fix permissions to run on priliged port"
+exec chown root ./SABnzbd.py /usr/bin/python2.7
+exec chmod +s ./SABnzbd.py /usr/bin/python2.7
+printf "[DONE]"
+
 #
 # Finally, start SABnzbd.
 #
