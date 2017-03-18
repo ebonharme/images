@@ -8,4 +8,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 RUN apk update \
  && apk add nfs-utils
 
-ENTRYPOINT /app/start.sh
+ADD start.sh /start.sh
+
+EXPOSE 8181 443
+
+ENTRYPOINT /start.sh
