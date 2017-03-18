@@ -58,7 +58,7 @@ RUN export SABNZBD_VERSION=1.2.2 PAR2CMDLINE_VERSION=v0.6.14 \
 
 VOLUME ["/mnt/Downloads", "/config"]
 
-EXPOSE 8080
+EXPOSE 8080 443
 
 WORKDIR /sabnzbd
 
