@@ -2,6 +2,9 @@ FROM node:4.8-alpine
 
 ENV SOURCE_REF master
 ENV SOURCE_URL https://github.com/drone/drone-ui.git
+ENV external_scheme http
+ENV external_host localhost
+ENV external_port 9000
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -15,8 +18,10 @@ RUN apk update \
  && apk add git \
  && git clone ${SOURCE_URL} /app \
  && cd /app \
- && git checkout -b deploybranch ${SOURCE_REF} \
- && npm install \
+ && git checkout -b deploybranch ${SOURCE_REF}
+WORKDIR /app
+COPY ./files/ .
+RUN npm install --only=production \
  && apk del git \
  && rm -fr .git
 
