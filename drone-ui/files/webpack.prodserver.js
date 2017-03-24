@@ -8,9 +8,10 @@ const webpackConfig = require('./webpack.config.js');
 const WebpackDevServer = require('webpack-dev-server');
 
 const port = 9000;
-const external_port = ${argv.external_port}
-const external_name = ${argv.external_name}
-const external_scheme = ${argv.external_scheme}
+const external_port = ${argv.external_port};
+const external_name = ${argv.external_name};
+const external_scheme = ${argv.external_scheme};
+
 const drone = {
   scheme: argv.scheme,
   host: argv.host,
