@@ -8,9 +8,9 @@ const webpackConfig = require('./webpack.config.js');
 const WebpackDevServer = require('webpack-dev-server');
 
 const port = 9000;
-const external_port = ${argv.external_port};
-const external_name = ${argv.external_name};
-const external_scheme = ${argv.external_scheme};
+const external_port = argv.external_port;
+const external_name = argv.external_name;
+const external_scheme = argv.external_scheme;
 
 const drone = {
   scheme: argv.scheme,
@@ -21,7 +21,7 @@ const drone = {
 };
 
 const config = require('./webpack.config.js');
-config.entry.app.unshift(`webpack-dev-server/client?${external_scheme}://${external_host}:${external_port}/`, 'webpack/hot/dev-server');
+config.entry.app.unshift(`webpack-dev-server/client?${external_scheme}://${external_name}:${external_port}/`, 'webpack/hot/dev-server');
 config.plugins.unshift(new webpack.HotModuleReplacementPlugin());
 const compiler = webpack(webpackConfig);
 const server = new WebpackDevServer(compiler, {
@@ -77,5 +77,5 @@ server.listeningApp.on('upgrade', function (req, socket) {
 server.listen(9000, (err) => {
   if (err) return console.err(err);
   console.log(`Now internally listening on http://localhost:${port}`);
-  console.log(`Connect externally on ${external_scheme}://${external_host}:${external_port}`);
+  console.log(`Connect externally on ${external_scheme}://${external_name}:${external_port}`);
 });

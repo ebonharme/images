@@ -2,9 +2,9 @@ FROM node:4.8-alpine
 
 ENV SOURCE_REF master
 ENV SOURCE_URL https://github.com/drone/drone-ui.git
-ENV external_scheme http
-ENV external_host localhost
-ENV external_port 9000
+ENV EXTERNAL_SCHEME http
+ENV EXTERNAL_NAME localhost
+ENV EXTERNAL_PORT 9000
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -28,4 +28,4 @@ RUN npm install --only=production \
 EXPOSE 9000
 
 WORKDIR /app
-ENTRYPOINT exec npm start -- --scheme ${DRONE_SCHEME} --host ${DRONE_HOST} -- ${DRONE_TOKEN}
+ENTRYPOINT exec npm start -- --scheme ${DRONE_SCHEME} --host ${DRONE_HOST} --external_name ${EXTERNAL_NAME} --external_port ${EXTERNAL_PORT} --external_scheme ${EXTERNAL_SCHEME} -- ${DRONE_TOKEN}
