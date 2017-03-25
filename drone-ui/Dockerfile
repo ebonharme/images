@@ -28,4 +28,5 @@ RUN npm install --only=production \
 EXPOSE 9000
 
 WORKDIR /app
-ENTRYPOINT exec npm start -- --scheme ${DRONE_SCHEME} --host ${DRONE_HOST} --external_name ${EXTERNAL_NAME} --external_port ${EXTERNAL_PORT} --external_scheme ${EXTERNAL_SCHEME} -- ${DRONE_TOKEN}
+ENTRYPOINT exec npm start -- --scheme ${DRONE_SCHEME} --host ${DRONE_HOST} --external_name ${EXTERNAL_NAME} --external_port ${EXTERNAL_PORT} --external_scheme ${EXTERNAL_SCHEME} --token ${DRONE_TOKEN}
+
