@@ -14,9 +14,14 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 
 COPY Memcache.php /var/www/html/Config/
 
-RUN cd /tmp/ \
+RUN apt update \
+ && apt install -y telnet libmemcached-dev zlib1g-dev \
+ && pecl install memcached \
+ && docker-php-ext-enable memcached \
+ && docker-php-source delete \
+ && cd /tmp/ \
  && curl -sLo app.tar.gz https://github.com/elijaa/phpmemcachedadmin/archive/${APP_VERSION}.tar.gz \
  && tar xf app.tar.gz \
  && cp -rf phpmemcachedadmin-${APP_VERSION}/* /var/www/html/ \
- && rm -rf phpmemcachedadmin-${APP_VERSION} app.tar.gz \
+ && rm -rf phpmemcachedadmin-${APP_VERSION} app.tar.gz pear* \
  && chown -R www-data:www-data /var/www/html
