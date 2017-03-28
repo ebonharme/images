@@ -9,4 +9,4 @@ RUN npm install -g redis-commander
 
 EXPOSE 8081
 
-ENTRYPOINT exec redis-commander ----redis-host ${REDIS_HOST} --redis-port ${REDIS_PORT}
+ENTRYPOINT exec redis-commander -- --redis-host ${REDIS_HOST} --redis-port ${REDIS_PORT}
