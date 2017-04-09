@@ -23,9 +23,9 @@ ENV LANG=C.UTF-8 \
 #
 
 RUN export DEBIAN_FRONTEND=noninteractive \
-    && export BUILD_PACKAGES="automake build-essential curl" \
+    && export BUILD_PACKAGES="automake build-essential curl git libpython-dev" \
     && export RUNTIME_BACKPORTS_PACKAGES="openssl python-cryptography python-openssl nfs-common" \
-    && export RUNTIME_PACKAGES="ca-certificates p7zip-full python-cheetah python-yenc unrar unzip" \
+    && export RUNTIME_PACKAGES="ca-certificates p7zip-full python-cheetah python-pip python-yenc unrar unzip" \
     && sed -i "s/ main$/ main contrib non-free/" /etc/apt/sources.list \
     && apt-get -q update \
     && apt-get install -qqy $BUILD_PACKAGES $RUNTIME_PACKAGES \
@@ -43,6 +43,16 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && ./configure \
     && make \
     && make install \
+    && cd /tmp/ \
+    && git clone https://github.com/jkansanen/par2cmdline-mt.git \
+    && cd par2cmdline-mt \
+    && aclocal \
+    && automake --add-missing \
+    && autoconf \
+    && ./configure \
+    && make \
+    && make install \
+    && pip install sabyenc --upgrade \
     && export AUTO_ADDED_PACKAGES="$(apt-mark showauto)" \
     && apt-get -y remove --purge $BUILD_PACKAGES $AUTO_ADDED_PACKAGES \
     && apt-get -y autoremove \
