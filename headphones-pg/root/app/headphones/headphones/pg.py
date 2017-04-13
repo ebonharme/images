@@ -67,10 +67,10 @@ class DBConnection:
         try:
             with self.connection.cursor() as c:
                 if args is None:
-                    logger.info("action Args are None")
+                    logger.debug("action Args are None")
                     sqlResult = c.execute(query)
                 else:
-                    logger.info("action Args are " + args)
+                    logger.debug("action Args are " + args)
                     sqlResult = c.execute(query, args)
 
         except psycopg2.OperationalError, e:
@@ -92,11 +92,11 @@ class DBConnection:
         try:
             with self.connection.cursor() as c:
                 if args is None:
-                    logger.info("select Args are None")
+                    logger.debug("select Args are None")
                     c.execute(query)
                     sqlResults = c.fetchall()
                 else:
-                    logger.info("select Args are " + args)
+                    logger.debug("select Args are " + args)
                     c.execute(query, args)
                     sqlResults = c.fetchall()
 
@@ -126,7 +126,7 @@ class DBConnection:
         #self.action(update_query, valueDict.values() + keyDict.values())
         try:
             with self.connection.cursor() as c:
-                logger.info("update Args are " + valueDict.values() + keyDict.values())
+                logger.debug("update Args are " + valueDict.values() + keyDict.values())
                 c.execute(update_query, valueDict.values() + keyDict.values())
 
                 if ( c.rowcount == 0 ) :
@@ -139,7 +139,7 @@ class DBConnection:
                     try:
                         #self.action(insert_query, valueDict.values() + keyDict.values())
                         with self.connection.cursor() as c:
-                            logger.info("insert Args are " + valueDict.values() + keyDict.values())
+                            logger.debug("insert Args are " + valueDict.values() + keyDict.values())
                             c.execute(insert_query, valueDict.values() + keyDict.values())
                             #rowcount = c.rowcount
                     except psycopg2.IntegrityError:
