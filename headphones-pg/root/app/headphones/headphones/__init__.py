@@ -365,6 +365,8 @@ def dbcheck():
     #conn = db.DBConnection()
     conn =  db.connect("host=postgres dbname=headphones user=headphones password=headphones")
     c = conn.cursor()
+    c.execute('CREATE EXTENSION CITEXT)')
+
     c.execute(
         'CREATE TABLE IF NOT EXISTS artists (ArtistID TEXT UNIQUE, ArtistName TEXT, ArtistSortName CITEXT, DateAdded TEXT, Status TEXT, IncludeExtras INTEGER, LatestAlbum TEXT, ReleaseDate TEXT, AlbumID TEXT, HaveTracks INTEGER, TotalTracks INTEGER, LastUpdated TEXT, ArtworkURL TEXT, ThumbURL TEXT, Extras TEXT, Type TEXT, MetaCritic TEXT)')
     # ReleaseFormat here means CD,Digital,Vinyl, etc. If using the default
