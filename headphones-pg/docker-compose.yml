@@ -1,0 +1,23 @@
+version: '2.1'
+
+services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: headphones
+      POSTGRES_PASSWORD: headphones
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U headphones"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  headphones:
+    build:
+      context: .
+    environment:
+      DB_HOST: postgres
+      DB_NAME: headphones
+      DB_USER: headphones
+      DB_PASS: headphones
+    depends_on:
+      - postgres
