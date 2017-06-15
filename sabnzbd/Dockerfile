@@ -15,7 +15,7 @@ ADD sabnzbd.sh /sabnzbd.sh
 RUN chmod 755 /sabnzbd.sh
 
 ENV LANG=C.UTF-8 \
-    SABNZBD_VERSION=2.0.1 \
+    SABNZBD_VERSION=2.0.0 \
     PAR2CMDLINE_VERSION=v0.6.14
 
 #
@@ -25,7 +25,7 @@ ENV LANG=C.UTF-8 \
 RUN export DEBIAN_FRONTEND=noninteractive \
     && export BUILD_PACKAGES="automake build-essential curl git libpython-dev" \
     && export RUNTIME_BACKPORTS_PACKAGES="openssl python-cryptography python-openssl nfs-common" \
-    && export RUNTIME_PACKAGES="ca-certificates p7zip-full python-cheetah python-pip python-yenc python-dbus unrar unzip" \
+    && export RUNTIME_PACKAGES="ca-certificates p7zip-full python-cheetah python-pip python-yenc unrar unzip" \
     && sed -i "s/ main$/ main contrib non-free/" /etc/apt/sources.list \
     && apt-get -q update \
     && apt-get install -qqy $BUILD_PACKAGES $RUNTIME_PACKAGES \
