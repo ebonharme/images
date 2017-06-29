@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-ENV MAILCATCHER_VERSION 0.6.5
+ARG MAILCATCHER_VERSION=0.6.5
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -15,4 +15,3 @@ EXPOSE 1025 1080
 
 ADD supervisord.conf /supervisord.conf
 CMD ["/usr/bin/supervisord","-c","/supervisord.conf","-n"]
-
