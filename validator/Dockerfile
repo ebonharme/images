@@ -1,6 +1,6 @@
 FROM jetty:alpine
 
-ENV VALIDATOR_VERSION 17.2.1
+ENV VALIDATOR_VERSION 17.7.0
 
 RUN apk update \
  && apk --no-cache --virtual .unpack add curl unzip \
