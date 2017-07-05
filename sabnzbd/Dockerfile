@@ -57,7 +57,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y remove --purge $BUILD_PACKAGES $AUTO_ADDED_PACKAGES \
     && apt-get -y autoremove \
     && apt-get install -qqy $RUNTIME_PACKAGES \
-    && apt-get -t jessie-backports install -qqy $RUNTIME_BACKPORTS_PACKAGES \
+    && apt-get -y jessie-backports install -qqy $RUNTIME_BACKPORTS_PACKAGES \
     && apt-get -y clean \
     && rm -rf /var/lib/apt/lists/* \
     && cd / \
