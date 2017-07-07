@@ -4,6 +4,7 @@ ARG BUILD_DATE
 ARG VCS_REF
 ARG SABNZBD_VERSION=2.0.1
 ARG PAR2CMDLINE_VERSION=v0.7.2
+ARG DEBIAN_FRONTEND=noninteractive
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-url="https://github.com/ebonharme/images.git" \
@@ -22,8 +23,7 @@ ENV LANG=C.UTF-8
 # Install SABnzbd and all required dependencies.
 #
 
-RUN export DEBIAN_FRONTEND=noninteractive \
-    && export BUILD_PACKAGES="automake build-essential curl git libpython-dev" \
+RUN export BUILD_PACKAGES="automake build-essential curl git libpython-dev" \
     && export RUNTIME_BACKPORTS_PACKAGES="openssl python-cryptography python-openssl nfs-common" \
     && export RUNTIME_PACKAGES="ca-certificates p7zip-full python-cheetah python-pip python-yenc unrar unzip" \
     && sed -i "s/ main$/ main contrib non-free/" /etc/apt/sources.list \
@@ -53,13 +53,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && make \
     && make install \
     && pip install sabyenc --upgrade \
-    && export AUTO_ADDED_PACKAGES="$(apt-mark showauto)" \
-    && apt-get -y remove --purge $BUILD_PACKAGES $AUTO_ADDED_PACKAGES \
-    && 1
-RUN apt-get -y autoremove \
-    && apt-get install -qqy $RUNTIME_PACKAGES \
-    && 1
-RUN apt-get -y jessie-backports install -qqy $RUNTIME_BACKPORTS_PACKAGES \
+    && apt-get -y autoremove \
+    && apt-get install -qqy $RUNTIME_PACKAGES $RUNTIME_BACKPORTS_PACKAGES \
     && apt-get -y clean \
     && rm -rf /var/lib/apt/lists/* \
     && cd / \
