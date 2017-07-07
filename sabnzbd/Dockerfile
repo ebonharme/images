@@ -2,6 +2,8 @@ FROM debian:jessie-backports
 
 ARG BUILD_DATE
 ARG VCS_REF
+ARG SABNZBD_VERSION=2.0.1
+ARG PAR2CMDLINE_VERSION=v0.7.2
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-url="https://github.com/ebonharme/images.git" \
@@ -11,12 +13,10 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 RUN groupadd -r -g 666 sabnzbd \
     && useradd -l -r -u 666 -g 666 -d /sabnzbd sabnzbd
 
-ADD sabnzbd.sh /sabnzbd.sh
+COPY sabnzbd.sh /sabnzbd.sh
 RUN chmod 755 /sabnzbd.sh
 
-ENV LANG=C.UTF-8 \
-    SABNZBD_VERSION=2.0.0 \
-    PAR2CMDLINE_VERSION=v0.6.14
+ENV LANG=C.UTF-8
 
 #
 # Install SABnzbd and all required dependencies.
@@ -55,9 +55,11 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && pip install sabyenc --upgrade \
     && export AUTO_ADDED_PACKAGES="$(apt-mark showauto)" \
     && apt-get -y remove --purge $BUILD_PACKAGES $AUTO_ADDED_PACKAGES \
-    && apt-get -y autoremove \
+    && 1
+RUN apt-get -y autoremove \
     && apt-get install -qqy $RUNTIME_PACKAGES \
-    && apt-get -t jessie-backports install -qqy $RUNTIME_BACKPORTS_PACKAGES \
+    && 1
+RUN apt-get -y jessie-backports install -qqy $RUNTIME_BACKPORTS_PACKAGES \
     && apt-get -y clean \
     && rm -rf /var/lib/apt/lists/* \
     && cd / \
