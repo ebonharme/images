@@ -16,22 +16,22 @@
 # NZBGet support added by CurlyMo <curlymoo1@gmail.com> as a part of
 # XBian - XBMC on the Raspberry Pi
 
-import sys
+import datetime
+import os
 import subprocess
+import sys
 import threading
 import webbrowser
+
+import cherrypy
+import headphones.config
+import headphones.exceptions
 #from headphones import pg as db
 import psycopg2 as db
-import datetime
-
-import os
-import cherrypy
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-from headphones import versioncheck, logger
-import headphones.config
+from headphones import logger, versioncheck
 from headphones.softchroot import SoftChroot
-import headphones.exceptions
 
 # (append new extras to the end)
 POSSIBLE_EXTRAS = [
@@ -143,7 +143,8 @@ def initialize(config_file):
         try:
             SOFT_CHROOT = SoftChroot(str(CONFIG.SOFT_CHROOT))
             if SOFT_CHROOT.isEnabled():
-                logger.info("Soft-chroot enabled for dir: %s", str(CONFIG.SOFT_CHROOT))
+                logger.info("Soft-chroot enabled for dir: %s",
+                            str(CONFIG.SOFT_CHROOT))
         except headphones.exceptions.SoftChrootError as e:
             logger.error("SoftChroot error: %s", e)
             raise e
@@ -155,11 +156,13 @@ def initialize(config_file):
             try:
                 os.makedirs(CONFIG.CACHE_DIR)
             except OSError as e:
-                logger.error("Could not create cache dir '%s': %s", DATA_DIR, e)
+                logger.error(
+                    "Could not create cache dir '%s': %s", DATA_DIR, e)
 
         # Sanity check for search interval. Set it to at least 6 hours
         if CONFIG.SEARCH_INTERVAL and CONFIG.SEARCH_INTERVAL < 360:
-            logger.info("Search interval too low. Resetting to 6 hour minimum.")
+            logger.info(
+                "Search interval too low. Resetting to 6 hour minimum.")
             CONFIG.SEARCH_INTERVAL = 360
 
         # Initialize the database
@@ -286,16 +289,20 @@ def initialize_scheduler():
 
         # Regular jobs
         minutes = CONFIG.SEARCH_INTERVAL
-        schedule_job(searcher.searchforalbum, 'Search for Wanted', hours=0, minutes=minutes)
+        schedule_job(searcher.searchforalbum, 'Search for Wanted',
+                     hours=0, minutes=minutes)
 
         minutes = CONFIG.DOWNLOAD_SCAN_INTERVAL
-        schedule_job(postprocessor.checkFolder, 'Download Scan', hours=0, minutes=minutes)
+        schedule_job(postprocessor.checkFolder,
+                     'Download Scan', hours=0, minutes=minutes)
 
         hours = CONFIG.LIBRARYSCAN_INTERVAL
-        schedule_job(librarysync.libraryScan, 'Library Scan', hours=hours, minutes=0)
+        schedule_job(librarysync.libraryScan,
+                     'Library Scan', hours=hours, minutes=0)
 
         hours = CONFIG.UPDATE_DB_INTERVAL
-        schedule_job(updater.dbUpdate, 'MusicBrainz Update', hours=hours, minutes=0)
+        schedule_job(updater.dbUpdate, 'MusicBrainz Update',
+                     hours=hours, minutes=0)
 
         # Update check
         if CONFIG.CHECK_GITHUB:
@@ -363,9 +370,10 @@ def sig_handler(signum=None, frame=None):
 def dbcheck():
     logger.info("Attempting to connect to the DB")
     #conn = db.DBConnection()
-    conn =  db.connect("host=postgres dbname=headphones user=headphones password=headphones")
+    conn = db.connect(
+        "host=postgres dbname=headphones user=headphones password=headphones")
     c = conn.cursor()
-    c.execute('CREATE EXTENSION CITEXT')
+    c.execute('CREATE EXTENSION IF NOT EXISTS CITEXT')
 
     c.execute(
         'CREATE TABLE IF NOT EXISTS artists (ArtistID TEXT UNIQUE, ArtistName TEXT, ArtistSortName CITEXT, DateAdded TEXT, Status TEXT, IncludeExtras INTEGER, LatestAlbum TEXT, ReleaseDate TEXT, AlbumID TEXT, HaveTracks INTEGER, TotalTracks INTEGER, LastUpdated TEXT, ArtworkURL TEXT, ThumbURL TEXT, Extras TEXT, Type TEXT, MetaCritic TEXT)')
@@ -623,7 +631,8 @@ def dbcheck():
         c.execute('SELECT TorrentHash from snatched')
     except db.OperationalError:
         c.execute('ALTER TABLE snatched ADD COLUMN TorrentHash TEXT')
-        c.execute('UPDATE snatched SET TorrentHash = FolderName WHERE Status LIKE "Seed_%"')
+        c.execute(
+            'UPDATE snatched SET TorrentHash = FolderName WHERE Status LIKE "Seed_%"')
 
     conn.commit()
     c.close()
