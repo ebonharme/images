@@ -5,7 +5,7 @@
 #  ebonharme/images:plexpy
 FROM alpine:latest
 
-ENV PLEXPY_VERSION v1.4.20
+ENV PLEXPY_VERSION v1.4.22
 
 ARG BUILD_DATE
 ARG VCS_REF
