@@ -1,4 +1,4 @@
-FROM linuxserver/headphones
+FROM linuxserver/headphones:79
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-url="https://github.com/ebonharme/images.git" \
