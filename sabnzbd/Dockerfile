@@ -11,8 +11,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.schema-version="1.0.0-rc1"
 
-RUN groupadd -r -g 666 sabnzbd \
-    && useradd -l -r -u 666 -g 666 -d /sabnzbd sabnzbd
+RUN groupadd -r -g 816 sabnzbd \
+    && useradd -l -r -u 816 -g 816 -d /sabnzbd sabnzbd
 
 COPY sabnzbd.sh /sabnzbd.sh
 RUN chmod 755 /sabnzbd.sh

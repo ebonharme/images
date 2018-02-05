@@ -11,8 +11,8 @@ echo "SABnzbd settings"
 echo "================"
 echo
 echo "  User:       ${USER}"
-echo "  UID:        ${SABNZBD_UID:=666}"
-echo "  GID:        ${SABNZBD_GID:=666}"
+echo "  UID:        ${SABNZBD_UID:=816}"
+echo "  GID:        ${SABNZBD_GID:=816}"
 echo
 echo "  Config:     ${CONFIG:=/config/sabnzbd.ini}"
 echo
