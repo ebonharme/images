@@ -21,10 +21,10 @@ echo
 # Change UID / GID of SABnzbd user.
 #
 
-#printf "Updating UID / GID... "
-#[[ $(id -u ${USER}) == ${SABNZBD_UID} ]] || usermod  -o -u ${SABNZBD_UID} ${USER}
-#[[ $(id -g ${USER}) == ${SABNZBD_GID} ]] || groupmod -o -g ${SABNZBD_GID} ${USER}
-#echo "[DONE]"
+printf "Updating UID / GID... "
+[[ $(id -u ${USER}) == ${SABNZBD_UID} ]] || usermod  -o -u ${SABNZBD_UID} ${USER}
+[[ $(id -g ${USER}) == ${SABNZBD_GID} ]] || groupmod -o -g ${SABNZBD_GID} ${USER}
+echo "[DONE]"
 
 
 #
@@ -39,11 +39,11 @@ printf "[DONE]"
 # Set directory permissions.
 #
 
-#printf "Set permissions..."
-#printf "touching ${CONFIG}"
-#touch ${CONFIG}
-#printf "chown -R ${USER}: /sabnzbd"
-#chown -R ${USER}: /sabnzbd
+printf "Set permissions..."
+printf "touching ${CONFIG}"
+touch ${CONFIG}
+printf "chowning -R ${USER}: /sabnzbd"
+chown -R ${USER}: /sabnzbd
 #function check_dir {
 #  [ "$(stat -c '%u %g' $1)" == "${SABNZBD_UID} ${SABNZBD_GID}" ] || chown ${USER}: $1
 #}
@@ -51,7 +51,7 @@ printf "[DONE]"
 #check_dir ${DATA_DIR}
 #check_dir /media
 #check_dir $(dirname ${CONFIG})
-#echo "[DONE]"
+echo "[DONE]"
 
 #
 # Because SABnzbd runs in a container we've to make sure we've a proper
@@ -64,15 +64,15 @@ PORT=$(sed -n '/^port *=/{s/port *= *//p;q}' ${CONFIG})
 LISTENER="-s 0.0.0.0:${PORT:=8080}"
 echo "[${PORT}]"
 
-#printf "Fix permissions to run on priliged port"
-#exec chown root ./SABnzbd.py /usr/bin/python2.7
-#exec chmod +s ./SABnzbd.py /usr/bin/python2.7
-#printf "[DONE]"
+printf "Fix permissions to run on priliged port"
+exec chown root ./SABnzbd.py /usr/bin/python2.7
+exec chmod +s ./SABnzbd.py /usr/bin/python2.7
+printf "[DONE]"
 
 #
 # Finally, start SABnzbd.
 #
 
 echo "Starting SABnzbd... with ./SABnzbd.py -b 0 -f ${CONFIG} ${LISTENER} ${CMD_PARAMS}"
-#exec su -pc "./SABnzbd.py -b 0 -f ${CONFIG} ${LISTENER} ${CMD_PARAMS}" ${USER}
-exec ./SABnzbd.py -b 0 -f ${CONFIG} ${LISTENER} ${CMD_PARAMS}
+exec su -pc "./SABnzbd.py -b 0 -f ${CONFIG} ${LISTENER} ${CMD_PARAMS}" ${USER}
+#exec ./SABnzbd.py -b 0 -f ${CONFIG} ${LISTENER} ${CMD_PARAMS}
