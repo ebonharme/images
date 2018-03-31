@@ -1,0 +1,13 @@
+---
+version: '2.1'
+services:
+  squid:
+    build:
+      context: ./
+    env_file:
+      - ./.env
+    volumes:
+      - ./squid.pem:/etc/squid/squid.pem
+      - ./squid.key:/etc/squid/squid.key
+    ports:
+      - 3128:3128
