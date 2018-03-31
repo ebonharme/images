@@ -7,7 +7,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./squid.pem:/etc/squid/squid.pem
-      - ./squid.key:/etc/squid/squid.key
+      - ./squid.pem.bak:/tmp/squid.pem
+      - ./squid.key.bak:/tmp/squid.key
     ports:
       - 3128:3128
