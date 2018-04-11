@@ -1,3 +1,7 @@
+# Existing sqlite3 database
+sqlite3
+!.gitkeep
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

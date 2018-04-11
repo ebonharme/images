@@ -1,3 +1,0 @@
-[submodule "musicbrainz"]
-	path = musicbrainz
-	url = https://github.com/ebonharme/musicbrainz-docker.git
