@@ -24,7 +24,7 @@ echo
 printf "Updating UID / GID... "
 [[ $(id -u ${USER}) == ${SABNZBD_UID} ]] || usermod  -o -u ${SABNZBD_UID} ${USER}
 [[ $(id -g ${USER}) == ${SABNZBD_GID} ]] || groupmod -o -g ${SABNZBD_GID} ${USER}
-echo "[DONE]"
+echo "[DONE Updating UID / GID...]"
 
 
 #
@@ -33,7 +33,7 @@ echo "[DONE]"
 
 printf "Mounting ${NFS_HOST}:${NFS_PATH} on ${DATA_DIR}"
 mount -o nfsvers=4 ${NFS_HOST}:${NFS_PATH} ${DATA_DIR}
-printf "[DONE]"
+printf "[DONE Mounting]"
 
 #
 # Set directory permissions.
@@ -51,7 +51,7 @@ chown -R ${USER}: /sabnzbd
 #check_dir ${DATA_DIR}
 #check_dir /media
 #check_dir $(dirname ${CONFIG})
-echo "[DONE]"
+echo "[DONE Set permissions...]"
 
 #
 # Because SABnzbd runs in a container we've to make sure we've a proper
@@ -67,7 +67,7 @@ echo "[${PORT}]"
 printf "Fix permissions to run on priliged port"
 exec chown root ./SABnzbd.py /usr/bin/python2.7
 exec chmod +s ./SABnzbd.py /usr/bin/python2.7
-printf "[DONE]"
+printf "[DONE Fix permissions to run on priliged port]"
 
 #
 # Finally, start SABnzbd.
